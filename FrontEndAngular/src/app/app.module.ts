@@ -7,9 +7,11 @@ import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+import { CarManagementComponent } from './car-management/car-management.component';
+import { EditCarComponent } from './edit-car/edit-car.component';
 
 @NgModule({
-  declarations: [AppComponent, RegisterComponent, LoginComponent, HomeComponent],
+  declarations: [AppComponent, RegisterComponent, LoginComponent, HomeComponent, CarManagementComponent, EditCarComponent],
   imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent],

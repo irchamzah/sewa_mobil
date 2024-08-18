@@ -1,0 +1,151 @@
+<div class="max-w-4xl mx-auto mt-10">
+  <h1 class="text-2xl font-bold mb-4">Manage Cars</h1>
+
+  <!-- Form to Add New Car -->
+  <form (ngSubmit)="addCar()" #carForm="ngForm">
+    <div class="mb-4">
+      <label class="block text-gray-700">Car Photos</label>
+      <input type="file" (change)="onFileChange($event)" multiple />
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700">Brand</label>
+      <input
+        type="text"
+        name="brand"
+        [(ngModel)]="carData.brand"
+        class="mt-1 block w-full p-2 border border-gray-300 rounded"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700">Model</label>
+      <input
+        type="text"
+        name="model"
+        [(ngModel)]="carData.model"
+        class="mt-1 block w-full p-2 border border-gray-300 rounded"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700">License Plate</label>
+      <input
+        type="text"
+        name="licensePlate"
+        [(ngModel)]="carData.licensePlate"
+        class="mt-1 block w-full p-2 border border-gray-300 rounded"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700">Daily Rent</label>
+      <input
+        type="number"
+        name="dailyRent"
+        [(ngModel)]="carData.dailyRent"
+        class="mt-1 block w-full p-2 border border-gray-300 rounded"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700">Availability</label>
+      <select
+        name="availability"
+        [(ngModel)]="carData.availability"
+        class="mt-1 block w-full p-2 border border-gray-300 rounded"
+        required
+      >
+        <option value="available">Available</option>
+        <option value="unavailable">Unavailable</option>
+      </select>
+    </div>
+    <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded">
+      Add Car
+    </button>
+  </form>
+
+  <div class="mt-8">
+    <!-- Filter disini -->
+    <div class="mb-4">
+      <label class="block text-gray-700">Filter by Brand</label>
+      <input
+        type="text"
+        [(ngModel)]="filters.brand"
+        (input)="applyFilters()"
+        class="mt-1 block w-full p-2 border border-gray-300 rounded"
+      />
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-gray-700">Filter by Model</label>
+      <input
+        type="text"
+        [(ngModel)]="filters.model"
+        (input)="applyFilters()"
+        class="mt-1 block w-full p-2 border border-gray-300 rounded"
+      />
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-gray-700">Filter by Availability</label>
+      <select
+        [(ngModel)]="filters.availability"
+        (change)="applyFilters()"
+        class="mt-1 block w-full p-2 border border-gray-300 rounded"
+      >
+        <option value="">All</option>
+        <option value="available">Available</option>
+        <option value="unavailable">Unavailable</option>
+      </select>
+    </div>
+
+    <!-- List of Cars -->
+    <div class="grid grid-cols-4 gap-4">
+      <div *ngFor="let car of filteredCars">
+        <div class="p-4 border border-gray-300 rounded mb-4">
+          <img
+            [src]="'http://localhost:8000/storage/' + car.photos[0]"
+            alt="Car Photo"
+            class="w-full h-40 object-cover mb-4"
+          />
+
+          <h2 class="text-xl font-semibold">{{ car.brand }} {{ car.model }}</h2>
+          <p>License Plate: {{ car.license_plate }}</p>
+          <p>Daily Rent: ${{ car.daily_rent }}</p>
+          <p>Availability: {{ car.availability }}</p>
+          <button
+            (click)="editCar(car)"
+            class="bg-yellow-500 text-white p-2 rounded"
+          >
+            Edit
+          </button>
+          <button
+            (click)="deleteCar(car.id)"
+            class="bg-red-500 text-white p-2 rounded"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination disini -->
+    <div class="mt-4 flex justify-between items-center">
+      <button
+        (click)="previousPage()"
+        [disabled]="currentPage === 1"
+        class="bg-blue-500 text-white p-2 rounded"
+      >
+        Previous
+      </button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button
+        (click)="nextPage()"
+        [disabled]="currentPage === totalPages"
+        class="bg-blue-500 text-white p-2 rounded"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+</div>

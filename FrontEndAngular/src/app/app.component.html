@@ -5,12 +5,10 @@
     </div>
     <!-- Tampilkan nama pengguna dan tombol logout jika sudah login -->
     <ng-container *ngIf="isLoggedIn(); else showAuthButtons">
-      <div>
+      <div class="flex gap-10 items-center">
+        <a routerLink="/cars" class="text-white">Cars Management</a>
         <span class="text-white">Hello, {{ userName }}</span>
-        <button
-          (click)="logout()"
-          class="ml-4 bg-red-500 text-white p-2 rounded"
-        >
+        <button (click)="logout()" class="bg-red-500 text-white p-2 rounded">
           Logout
         </button>
       </div>
@@ -20,7 +18,7 @@
     <ng-template #showAuthButtons>
       <div>
         <a routerLink="/login" class="text-white">Login</a>
-        <a routerLink="/register" class="ml-4 text-white">Register</a>
+        <a routerLink="/register" class="text-white">Register</a>
       </div>
     </ng-template>
   </div>
