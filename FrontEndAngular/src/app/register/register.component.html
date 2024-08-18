@@ -1,0 +1,68 @@
+<div class="max-w-md mx-auto mt-10">
+  <h1 class="text-2xl font-bold mb-4">Register</h1>
+  <form (ngSubmit)="onRegister()" #registerForm="ngForm">
+    <div class="mb-4">
+      <label class="block text-gray-700">Full Name</label>
+      <input
+        type="text"
+        name="name"
+        [(ngModel)]="registerData.name"
+        class="mt-1 block w-full p-2 border border-gray-300 rounded"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700">Email</label>
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="registerData.email"
+        class="mt-1 block w-full p-2 border border-gray-300 rounded"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700">Password</label>
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="registerData.password"
+        class="mt-1 block w-full p-2 border border-gray-300 rounded"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700">Address</label>
+      <input
+        type="text"
+        name="address"
+        [(ngModel)]="registerData.address"
+        class="mt-1 block w-full p-2 border border-gray-300 rounded"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700">Phone Number</label>
+      <input
+        type="text"
+        name="phone"
+        [(ngModel)]="registerData.phone"
+        class="mt-1 block w-full p-2 border border-gray-300 rounded"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700">Driver's License Number</label>
+      <input
+        type="text"
+        name="driverLicense"
+        [(ngModel)]="registerData.driverLicense"
+        class="mt-1 block w-full p-2 border border-gray-300 rounded"
+        required
+      />
+    </div>
+    <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded">
+      Register
+    </button>
+  </form>
+</div>
