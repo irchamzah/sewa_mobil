@@ -20,9 +20,10 @@ export class LoginComponent {
       (response: any) => {
         console.log('Login successful', response);
         // Simpan token atau data pengguna jika perlu
-        localStorage.setItem('authToken', response.token);
+        localStorage.setItem('authToken', response.token); // Menyimpan token di localStorage
+        localStorage.setItem('userName', response.user.name);
         // Arahkan ke halaman beranda atau halaman lain setelah login
-        this.router.navigate(['/home']);
+        this.router.navigate(['/']);
       },
       (error) => {
         console.error('Login failed', error);
