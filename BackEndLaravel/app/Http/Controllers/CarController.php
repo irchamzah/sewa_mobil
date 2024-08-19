@@ -17,11 +17,11 @@ class CarController extends Controller
 
     public function index(Request $request)
     {
-        // Log::info(
-        //     $request->all()
-        // );
+        $userId = Auth::id();
 
-        $query = Car::query();
+
+
+        $query = Car::where('user_id', $userId);
 
         // Filter by brand
         if ($request->has('brand') && !empty($request->brand)) {
@@ -41,7 +41,9 @@ class CarController extends Controller
         // Pagination
         $cars = $query->paginate(8); // Adjust the number per page as needed
 
-        Log::info($cars);
+        foreach ($cars as $car) {
+            $car->photos = json_decode($car->photos); // Convert JSON string to array
+        }
 
 
         return response()->json($cars);
@@ -121,7 +123,6 @@ class CarController extends Controller
         $car->save();
         return response()->json($car);
     }
-
 
     public function destroy($id)
     {
