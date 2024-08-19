@@ -56,12 +56,28 @@ class CarRentalController extends Controller
 
     public function rentalHistory()
     {
+        // Tentukan jumlah item per halaman
+        $perPage = 4;
+
+        // Gunakan paginate untuk mengambil data secara paginated
         $rentals = Rental::with('car')
             ->where('user_id', Auth::id())
-            ->get();
+            ->orderBy('end_date', 'asc')
+            ->paginate($perPage);
 
+        // Ubah photos menjadi array jika itu adalah string JSON
+        foreach ($rentals as $rental) {
+            if ($rental->car) {
+                if (is_string($rental->car->photos)) {
+                    $rental->car->photos = json_decode($rental->car->photos, true);
+                }
+            }
+        }
+
+        // Return data paginated
         return response()->json($rentals);
     }
+
 
     public function availableDates($id)
     {

@@ -1,95 +1,139 @@
 <template>
-  <div class="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-    <h1 class="text-2xl font-semibold mb-4">Profile</h1>
-
-    <form @submit.prevent="updateProfile">
-      <div class="mb-4">
-        <label for="name" class="block text-gray-700">Name</label>
-        <input
-          type="text"
-          id="name"
-          v-model="profile.name"
-          class="border border-gray-300 rounded px-3 py-2 w-full"
-          required
-        />
-      </div>
-
-      <div class="mb-4">
-        <label for="email" class="block text-gray-700">Email</label>
-        <input
-          type="email"
-          id="email"
-          v-model="profile.email"
-          class="border border-gray-300 rounded px-3 py-2 w-full"
-          required
-        />
-      </div>
-
-      <div class="mb-4">
-        <label for="address" class="block text-gray-700">Address</label>
-        <input
-          type="text"
-          id="address"
-          v-model="profile.address"
-          class="border border-gray-300 rounded px-3 py-2 w-full"
-        />
-      </div>
-
-      <div class="mb-4">
-        <label for="phone" class="block text-gray-700">Phone</label>
-        <input
-          type="text"
-          id="phone"
-          v-model="profile.phone"
-          class="border border-gray-300 rounded px-3 py-2 w-full"
-          required
-        />
-      </div>
-
-      <div class="mb-4">
-        <label for="driver_license" class="block text-gray-700"
-          >Driver License</label
-        >
-        <input
-          type="text"
-          id="driver_license"
-          v-model="profile.driver_license"
-          class="border border-gray-300 rounded px-3 py-2 w-full"
-          required
-        />
-      </div>
-
-      <!-- Password Update Section -->
-      <div class="mb-4">
-        <label for="password" class="block text-gray-700">New Password</label>
-        <input
-          type="password"
-          id="password"
-          v-model="password"
-          class="border border-gray-300 rounded px-3 py-2 w-full"
-        />
-      </div>
-
-      <div class="mb-4">
-        <label for="password_confirmation" class="block text-gray-700"
-          >Confirm New Password</label
-        >
-        <input
-          type="password"
-          id="password_confirmation"
-          v-model="passwordConfirmation"
-          class="border border-gray-300 rounded px-3 py-2 w-full"
-        />
-      </div>
-
-      <button
-        type="submit"
-        class="bg-blue-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-blue-600"
-      >
+  <section class="bg-white dark:bg-gray-900">
+    <div class="max-w-2xl px-4 py-8 mx-auto lg:py-16">
+      <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">
         Update Profile
-      </button>
-    </form>
-  </div>
+      </h2>
+      <form @submit.prevent="updateProfile">
+        <div class="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
+          <!-- Name -->
+          <div class="w-full">
+            <label
+              for="name"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Name</label
+            >
+            <input
+              type="text"
+              id="name"
+              v-model="profile.name"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Type your name"
+              required
+            />
+          </div>
+
+          <!-- Email -->
+          <div class="w-full">
+            <label
+              for="email"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Email</label
+            >
+            <input
+              type="email"
+              id="email"
+              v-model="profile.email"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Type your email"
+              required
+            />
+          </div>
+
+          <!-- Address -->
+          <div class="w-full col-span-2">
+            <label
+              for="address"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Address</label
+            >
+            <input
+              type="text"
+              id="address"
+              v-model="profile.address"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Type your address"
+            />
+          </div>
+
+          <!-- Phone -->
+          <div class="w-full">
+            <label
+              for="phone"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Phone</label
+            >
+            <input
+              type="text"
+              id="phone"
+              v-model="profile.phone"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Type your phone number"
+              required
+            />
+          </div>
+
+          <!-- Driver License -->
+          <div class="w-full">
+            <label
+              for="driver_license"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Driver License</label
+            >
+            <input
+              type="text"
+              id="driver_license"
+              v-model="profile.driver_license"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Type your driver license"
+              required
+            />
+          </div>
+
+          <!-- New Password -->
+          <div class="w-full">
+            <label
+              for="password"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >New Password</label
+            >
+            <input
+              type="password"
+              id="password"
+              v-model="password"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Type new password"
+            />
+          </div>
+
+          <!-- Confirm New Password -->
+          <div class="w-full">
+            <label
+              for="password_confirmation"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Confirm New Password</label
+            >
+            <input
+              type="password"
+              id="password_confirmation"
+              v-model="passwordConfirmation"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Confirm new password"
+            />
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-4">
+          <button
+            type="submit"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Update Profile
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
 </template>
 
 <script>

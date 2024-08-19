@@ -13,7 +13,7 @@ class HomeController extends Controller
         //     $request->all()
         // );
 
-        $query = Car::query();
+        $query = Car::query()->orderBy('updated_at', 'desc');
 
         // Filter by brand
         if ($request->has('brand') && !empty($request->brand)) {
@@ -55,9 +55,11 @@ class HomeController extends Controller
             'license_plate' => $car->license_plate,
             'daily_rent' => $car->daily_rent,
             'photos' => $car->photos,
-            'user' => $car->user->name, // Assuming 'name' is the column in users table
-            'availability' => $car->availability, // Assuming 'name' is the column in users table
-            'timestamps' => $car->created_at,
+            'user' => $car->user->name,
+            'user_phone' => $car->user->phone,
+            'availability' => $car->availability,
+            'created_at' => $car->created_at,
+            'updated_at' => $car->updated_at,
         ]);
     }
 }

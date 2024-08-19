@@ -18,10 +18,7 @@ class CarController extends Controller
     public function index(Request $request)
     {
         $userId = Auth::id();
-
-
-
-        $query = Car::where('user_id', $userId);
+        $query = Car::where('user_id', $userId)->orderByDesc('updated_at');
 
         // Filter by brand
         if ($request->has('brand') && !empty($request->brand)) {
@@ -57,7 +54,7 @@ class CarController extends Controller
             'licensePlate' => 'required|string',
             'dailyRent' => 'required|numeric',
             'availability' => 'required|string|in:available,unavailable',
-            'photos.*' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+            'photos.*' => 'nullable|image|mimes:jpg,png,jpeg,webp|max:2048',
         ]);
 
         $car = new Car();
@@ -83,8 +80,14 @@ class CarController extends Controller
 
     public function show($id)
     {
-        return Car::findOrFail($id);
+        $car = Car::findOrFail($id);
+
+        // Decode JSON if 'photos' is stored as JSON in the database
+        $car->photos = json_decode($car->photos, true);
+
+        return response()->json($car);
     }
+
 
     public function update(Request $request, $id)
     {

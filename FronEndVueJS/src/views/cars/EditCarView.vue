@@ -1,108 +1,190 @@
 <template>
-  <div class="p-4">
-    <h1 class="text-2xl font-semibold mb-4">Edit Car</h1>
+  <section class="bg-white dark:bg-gray-900">
+    <div class="max-w-2xl px-4 py-8 mx-auto lg:py-16">
+      <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">
+        Edit Car
+      </h2>
+      <form @submit.prevent="updateCar">
+        <div class="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
+          <div class="sm:col-span-2">
+            <label
+              for="brand"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Brand
+            </label>
+            <input
+              type="text"
+              v-model="car.brand"
+              id="brand"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Enter car brand"
+              required
+            />
+          </div>
 
-    <form @submit.prevent="updateCar">
-      <div class="mb-4">
-        <label for="brand" class="block text-gray-700">Brand:</label>
-        <input
-          type="text"
-          v-model="car.brand"
-          id="brand"
-          class="border border-gray-300 rounded px-3 py-2 w-full"
-          required
-        />
-      </div>
+          <div class="w-full">
+            <label
+              for="model"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Model
+            </label>
+            <input
+              type="text"
+              v-model="car.model"
+              id="model"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Enter car model"
+              required
+            />
+          </div>
 
-      <div class="mb-4">
-        <label for="model" class="block text-gray-700">Model:</label>
-        <input
-          type="text"
-          v-model="car.model"
-          id="model"
-          class="border border-gray-300 rounded px-3 py-2 w-full"
-          required
-        />
-      </div>
+          <div class="w-full">
+            <label
+              for="licensePlate"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              License Plate
+            </label>
+            <input
+              type="text"
+              v-model="car.license_plate"
+              id="licensePlate"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Enter license plate"
+              required
+            />
+          </div>
 
-      <div class="mb-4">
-        <label for="licensePlate" class="block text-gray-700"
-          >License Plate:</label
-        >
-        <input
-          type="text"
-          v-model="car.licensePlate"
-          id="licensePlate"
-          class="border border-gray-300 rounded px-3 py-2 w-full"
-          required
-        />
-      </div>
+          <div class="w-full">
+            <label
+              for="dailyRent"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Daily Rent
+            </label>
+            <input
+              type="number"
+              v-model="car.daily_rent"
+              min="0"
+              step="1"
+              id="dailyRent"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Enter daily rent"
+              required
+            />
+            <span v-if="dailyRentError" class="text-red-600">{{
+              dailyRentError
+            }}</span>
+          </div>
 
-      <div class="mb-4">
-        <label for="dailyRent" class="block text-gray-700">Daily Rent:</label>
-        <input
-          type="number"
-          v-model="car.dailyRent"
-          id="dailyRent"
-          class="border border-gray-300 rounded px-3 py-2 w-full"
-          required
-        />
-      </div>
+          <div class="w-full">
+            <label
+              for="availability"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Availability
+            </label>
+            <select
+              id="availability"
+              v-model="car.availability"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              required
+            >
+              <option value="available">Available</option>
+              <option value="unavailable">Unavailable</option>
+            </select>
+          </div>
 
-      <div class="mb-4">
-        <label for="availability" class="block text-gray-700"
-          >Availability:</label
-        >
-        <select
-          id="availability"
-          v-model="car.availability"
-          class="border border-gray-300 rounded px-3 py-2 w-full"
-          required
-        >
-          <option value="available">Available</option>
-          <option value="unavailable">Unavailable</option>
-        </select>
-      </div>
+          <div class="sm:col-span-2">
+            <label
+              for="photos"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Photos
+            </label>
 
-      <div class="mb-4">
-        <label for="photos" class="block text-gray-700">Photos:</label>
-        <input
-          type="file"
-          id="photos"
-          @change="handleFileChange"
-          multiple
-          class="border border-gray-300 rounded px-3 py-2 w-full"
-        />
-        <div v-if="previewPhotos.length" class="mt-4 flex flex-wrap gap-4">
-          <img
-            v-for="(preview, index) in previewPhotos"
-            :key="index"
-            :src="preview"
-            alt="Preview"
-            class="w-24 h-24 object-cover border border-gray-300 rounded"
-          />
+            <input
+              type="file"
+              id="photos"
+              @change="handleFileChange"
+              multiple
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+
+            <div class="mt-4 flex flex-wrap gap-4">
+              <!-- Display existing photos -->
+              <div>
+                <label
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >Existing Photos</label
+                >
+                <div class="flex gap-2">
+                  <img
+                    v-for="(photo, index) in photos"
+                    :key="'existing-' + index"
+                    :src="`http://localhost:8000/storage/${photo}`"
+                    alt="Existing Photo"
+                    class="w-24 h-24 object-cover border border-gray-300 rounded"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >New Photos</label
+                >
+                <!-- Display new photos -->
+                <div class="flex gap-2">
+                  <img
+                    v-for="(preview, index) in previewPhotos"
+                    :key="'preview-' + index"
+                    :src="preview"
+                    alt="Preview"
+                    class="w-24 h-24 object-cover border border-gray-300 rounded"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <button
-        type="submit"
-        class="bg-blue-500 text-white px-4 py-2 rounded-md text-sm font-medium shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      >
-        Update Car
-      </button>
+        <div class="flex items-center space-x-4">
+          <button
+            type="submit"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Update Car
+          </button>
 
-      <button
-        @click="deleteCar"
-        type="button"
-        class="bg-red-500 text-white px-4 py-2 rounded-md font-medium shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
-      >
-        Delete Car
-      </button>
+          <button
+            @click="deleteCar"
+            type="button"
+            class="text-red-600 inline-flex items-center hover:text-white border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
+          >
+            <svg
+              class="w-5 h-5 mr-1 -ml-1"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            Delete
+          </button>
+        </div>
 
-      <div v-if="error" class="mt-4 text-red-600">{{ error }}</div>
-      <div v-if="success" class="mt-4 text-green-600">{{ success }}</div>
-    </form>
-  </div>
+        <div v-if="error" class="mt-4 text-red-600">{{ error }}</div>
+        <div v-if="success" class="mt-4 text-green-600">{{ success }}</div>
+      </form>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -116,13 +198,14 @@ export default {
         brand: "",
         model: "",
         licensePlate: "",
-        dailyRent: "",
+        dailyRent: 0,
         availability: "",
         photos: [],
       },
       previewPhotos: [],
       error: null,
       success: null,
+      dailyRentError: null,
     };
   },
   methods: {
@@ -130,11 +213,10 @@ export default {
       const formData = new FormData();
       formData.append("brand", this.car.brand);
       formData.append("model", this.car.model);
-      formData.append("licensePlate", this.car.licensePlate);
-      formData.append("dailyRent", this.car.dailyRent);
+      formData.append("licensePlate", this.car.license_plate);
+      formData.append("dailyRent", this.car.daily_rent);
       formData.append("availability", this.car.availability);
 
-      // Check if photos is an array and has elements before appending
       if (Array.isArray(this.car.photos) && this.car.photos.length > 0) {
         this.car.photos.forEach((photo) => {
           formData.append("photos[]", photo);
@@ -175,7 +257,7 @@ export default {
           );
           this.$router.push("/car-management");
         } catch (error) {
-          console.error("Error deleting car:", error);
+          console.error("Delete failed", error);
         }
       }
     },
@@ -186,39 +268,35 @@ export default {
         URL.createObjectURL(file)
       );
     },
-    async fetchCarDetails() {
-      try {
-        const response = await axios.get(
-          `http://localhost:8000/api/cars/${this.$route.params.id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        this.car = {
-          brand: response.data.brand,
-          model: response.data.model,
-          licensePlate: response.data.license_plate,
-          dailyRent: response.data.daily_rent,
-          availability: response.data.availability,
-          photos: response.data.photos,
-        };
-        this.previewPhotos = this.car.photos.map(
-          (photo) => `http://localhost:8000/storage/${photo}`
-        );
-      } catch (error) {
-        this.error =
-          error.response.data.message || "Failed to fetch car details.";
-      }
-    },
   },
-  mounted() {
-    this.fetchCarDetails();
+
+  async created() {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/cars/${this.$route.params.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      this.car = response.data;
+
+      // Ensure this.car.photos is an array
+      if (Array.isArray(this.car.photos)) {
+        this.photos = this.car.photos; // Existing photos
+        this.previewPhotos = []; // Reset preview photos
+      } else {
+        this.photos = []; // Default to an empty array if photos is not an array
+      }
+    } catch (error) {
+      console.error("Failed to fetch car data", error);
+    }
   },
 };
 </script>
 
 <style scoped>
-/* Optional additional styling */
+/* Add any custom styles here if needed */
 </style>

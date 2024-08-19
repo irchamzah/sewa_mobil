@@ -1,47 +1,67 @@
 <template>
-  <div class="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-    <h2 class="text-xl font-semibold text-gray-800 mb-4">Rent a Car</h2>
+  <section
+    class="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12 min-h-[600px]"
+  >
+    <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+      <div class="max-w-sm mx-auto p-6 bg-gray-800 rounded-lg shadow-md">
+        <h2 class="text-xl font-semibold text-gray-200 mb-4">Rent a Car</h2>
 
-    <form @submit.prevent="submitRental">
-      <div class="mb-4">
-        <label for="startDate" class="block text-gray-700">Start Date</label>
-        <input
-          type="date"
-          id="startDate"
-          v-model="startDate"
-          class="border border-gray-300 rounded px-3 py-2 w-full"
-          required
-        />
+        <form @submit.prevent="submitRental">
+          <div class="mb-6">
+            <label
+              for="startDate"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Start Date</label
+            >
+            <input
+              type="date"
+              id="startDate"
+              v-model="startDate"
+              class="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              required
+            />
+          </div>
+
+          <div class="mb-6">
+            <label
+              for="endDate"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >End Date</label
+            >
+            <input
+              type="date"
+              id="endDate"
+              v-model="endDate"
+              class="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="bg-yellow-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-500"
+          >
+            Confirm Rental
+          </button>
+        </form>
+
+        <div v-if="unavailableDates.length" class="mt-6">
+          <h3 class="text-lg font-semibold text-gray-200 mb-2">
+            Unavailable Dates:
+          </h3>
+          <ul class="list-disc pl-5">
+            <li
+              v-for="date in unavailableDates"
+              :key="date"
+              class="text-gray-600 dark:text-gray-400"
+            >
+              {{ date }}
+            </li>
+          </ul>
+        </div>
       </div>
-
-      <div class="mb-4">
-        <label for="endDate" class="block text-gray-700">End Date</label>
-        <input
-          type="date"
-          id="endDate"
-          v-model="endDate"
-          class="border border-gray-300 rounded px-3 py-2 w-full"
-          required
-        />
-      </div>
-
-      <button
-        type="submit"
-        class="bg-yellow-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-yellow-600"
-      >
-        Confirm Rental
-      </button>
-    </form>
-
-    <div v-if="availableDates.length" class="mt-6">
-      <h3 class="text-lg font-semibold text-gray-800">Unavailable Dates:</h3>
-      <ul class="list-disc pl-5">
-        <li v-for="date in unavailableDates" :key="date" class="text-gray-600">
-          {{ date }}
-        </li>
-      </ul>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -56,7 +76,6 @@ export default {
 
     const startDate = ref("");
     const endDate = ref("");
-    const availableDates = ref([]);
     const unavailableDates = ref([]);
 
     // Check available dates when component is mounted
@@ -71,13 +90,13 @@ export default {
             },
           }
         );
-        availableDates.value = response.data;
-        unavailableDates.value = availableDates.value.map(
+        // Assuming the API returns dates that are unavailable for the car
+        unavailableDates.value = response.data.map(
           (d) => `${d.start_date} to ${d.end_date}`
         );
       } catch (error) {
         console.error(
-          "Error fetching available dates:",
+          "Error fetching unavailable dates:",
           error.response?.data || error.message
         );
       }
@@ -98,8 +117,6 @@ export default {
 
     const submitRental = async () => {
       const carId = route.params.carId;
-
-      console.log(localStorage.getItem("token"));
 
       try {
         await axios.post(
@@ -128,7 +145,6 @@ export default {
       startDate,
       endDate,
       submitRental,
-      availableDates,
       unavailableDates,
       isDateAvailable,
     };

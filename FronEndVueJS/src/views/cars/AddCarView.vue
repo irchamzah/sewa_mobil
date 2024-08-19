@@ -1,97 +1,130 @@
 <template>
-  <div class="p-6 bg-white rounded-lg shadow-lg">
-    <h1 class="text-2xl font-semibold mb-6">Add Car</h1>
-    <form @submit.prevent="addCar">
-      <!-- Brand -->
-      <div class="mb-4">
-        <label for="brand" class="block text-gray-700">Brand:</label>
-        <input
-          type="text"
-          v-model="form.brand"
-          id="brand"
-          class="border border-gray-300 rounded px-3 py-2 w-full"
-          required
-        />
-      </div>
-
-      <!-- Model -->
-      <div class="mb-4">
-        <label for="model" class="block text-gray-700">Model:</label>
-        <input
-          type="text"
-          v-model="form.model"
-          id="model"
-          class="border border-gray-300 rounded px-3 py-2 w-full"
-          required
-        />
-      </div>
-
-      <!-- License Plate -->
-      <div class="mb-4">
-        <label for="licensePlate" class="block text-gray-700"
-          >License Plate:</label
-        >
-        <input
-          type="text"
-          v-model="form.licensePlate"
-          id="licensePlate"
-          class="border border-gray-300 rounded px-3 py-2 w-full"
-          required
-        />
-      </div>
-
-      <!-- Daily Rent -->
-      <div class="mb-4">
-        <label for="dailyRent" class="block text-gray-700">Daily Rent:</label>
-        <input
-          type="number"
-          v-model="form.dailyRent"
-          id="dailyRent"
-          class="border border-gray-300 rounded px-3 py-2 w-full"
-          required
-        />
-      </div>
-
-      <!-- Availability -->
-      <div class="mb-4">
-        <label for="availability" class="block text-gray-700"
-          >Availability:</label
-        >
-        <select
-          id="availability"
-          v-model="form.availability"
-          class="border border-gray-300 rounded px-3 py-2 w-full"
-          required
-        >
-          <option value="available">Available</option>
-          <option value="unavailable">Unavailable</option>
-        </select>
-      </div>
-
-      <!-- Photos -->
-      <div class="mb-4">
-        <label for="photos" class="block text-gray-700">Photos:</label>
-        <input
-          type="file"
-          id="photos"
-          @change="handleFileUpload"
-          multiple
-          class="border border-gray-300 rounded px-3 py-2 w-full"
-        />
-        <p class="text-gray-600 mt-2">You can select multiple images.</p>
-      </div>
-
-      <button
-        type="submit"
-        class="bg-blue-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      >
+  <section class="bg-white dark:bg-gray-900">
+    <div class="max-w-2xl px-4 py-8 mx-auto lg:py-16">
+      <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">
         Add Car
-      </button>
+      </h2>
+      <form @submit.prevent="addCar">
+        <div class="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
+          <!-- Brand -->
+          <div class="w-full">
+            <label
+              for="brand"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Brand</label
+            >
+            <input
+              type="text"
+              v-model="form.brand"
+              id="brand"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Enter car brand"
+              required
+            />
+          </div>
 
-      <div v-if="error" class="mt-4 text-red-600">{{ error }}</div>
-      <div v-if="success" class="mt-4 text-green-600">{{ success }}</div>
-    </form>
-  </div>
+          <!-- Model -->
+          <div class="w-full">
+            <label
+              for="model"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Model</label
+            >
+            <input
+              type="text"
+              v-model="form.model"
+              id="model"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Enter car model"
+              required
+            />
+          </div>
+
+          <!-- License Plate -->
+          <div class="w-full">
+            <label
+              for="licensePlate"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >License Plate</label
+            >
+            <input
+              type="text"
+              v-model="form.licensePlate"
+              id="licensePlate"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Enter license plate"
+              required
+            />
+          </div>
+
+          <!-- Daily Rent -->
+          <div class="w-full">
+            <label
+              for="dailyRent"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Daily Rent</label
+            >
+            <input
+              type="number"
+              v-model="form.dailyRent"
+              id="dailyRent"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Enter daily rent"
+              required
+            />
+          </div>
+
+          <!-- Availability -->
+          <div class="w-full">
+            <label
+              for="availability"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Availability</label
+            >
+            <select
+              id="availability"
+              v-model="form.availability"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              required
+            >
+              <option value="available">Available</option>
+              <option value="unavailable">Unavailable</option>
+            </select>
+          </div>
+
+          <!-- Photos -->
+          <div class="w-full sm:col-span-2">
+            <label
+              for="photos"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Photos</label
+            >
+            <input
+              required
+              type="file"
+              id="photos"
+              @change="handleFileUpload"
+              multiple
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+            <p class="text-gray-600 mt-2">You can select multiple images.</p>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-4">
+          <button
+            type="submit"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Add Car
+          </button>
+        </div>
+
+        <div v-if="error" class="mt-4 text-red-600">{{ error }}</div>
+        <div v-if="success" class="mt-4 text-green-600">{{ success }}</div>
+      </form>
+    </div>
+  </section>
 </template>
 
 <script>
