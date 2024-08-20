@@ -37,9 +37,19 @@
             />
           </div>
 
+          <p v-if="!isDateAvailable" class="text-red-500 mb-4">
+            The selected dates are not available. Please choose different dates.
+          </p>
+
           <button
             type="submit"
-            class="bg-yellow-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-500"
+            :class="{
+              'bg-yellow-500 hover:bg-yellow-600 focus:ring-yellow-400 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-500':
+                isDateAvailable,
+              'bg-gray-400 cursor-not-allowed': !isDateAvailable,
+            }"
+            :disabled="!isDateAvailable"
+            class="text-white px-4 py-2 rounded-md shadow-sm focus:outline-none focus:ring-2 dark:focus:ring-yellow-500"
           >
             Confirm Rental
           </button>
@@ -78,19 +88,19 @@ export default {
     const endDate = ref("");
     const unavailableDates = ref([]);
 
-    // Check available dates when component is mounted
+    // Check unavailable dates when component is mounted
     onMounted(async () => {
       const carId = route.params.carId;
       try {
         const response = await axios.get(
-          `http://localhost:8000/api/rental/${carId}/available-dates`,
+          `http://localhost:8000/api/rental/${carId}/unavailable-dates`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           }
         );
-        // Assuming the API returns dates that are unavailable for the car
+
         unavailableDates.value = response.data.map(
           (d) => `${d.start_date} to ${d.end_date}`
         );
@@ -103,15 +113,18 @@ export default {
     });
 
     const isDateAvailable = computed(() => {
-      // Check if the selected date range is within the unavailable dates
       const start = new Date(startDate.value);
       const end = new Date(endDate.value);
 
+      if (end <= start) {
+        return false;
+      }
+
       return !unavailableDates.value.some((range) => {
-        const [startDate, endDate] = range
+        const [rangeStart, rangeEnd] = range
           .split(" to ")
           .map((d) => new Date(d));
-        return start <= endDate && end >= startDate;
+        return start <= rangeEnd && end >= rangeStart;
       });
     });
 

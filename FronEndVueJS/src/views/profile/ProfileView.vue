@@ -154,7 +154,6 @@ export default {
     const passwordConfirmation = ref("");
     const router = useRouter();
 
-    // Fetch profile when the component is mounted
     onMounted(async () => {
       try {
         const token = localStorage.getItem("token");
@@ -169,7 +168,7 @@ export default {
           "Error fetching profile:",
           error.response?.data || error.message
         );
-        // Redirect to login if not authenticated
+
         if (error.response?.status === 401) {
           router.push("/login");
         }
@@ -216,6 +215,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* Add any additional styles here */
-</style>
+<style scoped></style>

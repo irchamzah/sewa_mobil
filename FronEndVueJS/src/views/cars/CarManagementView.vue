@@ -228,17 +228,17 @@ export default {
             Authorization: `Bearer ${token}`,
           },
         });
-        this.cars = response.data.data; // 'data' contains the actual cars
+        this.cars = response.data.data;
         this.page = response.data.current_page;
         this.totalPages = response.data.last_page;
       } catch (error) {
         console.error("Error fetching cars:", error);
       } finally {
-        this.isLoading = false; // Selesai loading
+        this.isLoading = false;
       }
     },
     editCar(id) {
-      this.$router.push(`/edit-car/${id}`); // Navigate to edit car page
+      this.$router.push(`/edit-car/${id}`);
     },
   },
   mounted() {
@@ -247,6 +247,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* Optional additional styling */
-</style>
+<style scoped></style>

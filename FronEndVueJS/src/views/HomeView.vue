@@ -69,7 +69,6 @@
         </div>
       </div>
 
-      <!-- Loading -->
       <!-- Skeleton Loader -->
       <div
         v-if="isLoading"
@@ -216,7 +215,7 @@ export default {
     };
   },
   methods: {
-    async fetchCars(page = 1) {
+    async fetchCars(page) {
       this.isLoading = true;
       try {
         const params = {
@@ -226,13 +225,13 @@ export default {
         const response = await axios.get("http://localhost:8000/api/home", {
           params,
         });
-        this.cars = response.data.data; // 'data' contains the actual cars
+        this.cars = response.data.data;
         this.page = response.data.current_page;
         this.totalPages = response.data.last_page;
       } catch (error) {
         console.error("Error fetching cars:", error);
       } finally {
-        this.isLoading = false; // Selesai loading
+        this.isLoading = false;
       }
     },
     viewDetails(id) {
@@ -245,6 +244,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* Optional additional styling */
-</style>
+<style scoped></style>

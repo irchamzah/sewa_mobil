@@ -108,6 +108,26 @@
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
             <p class="text-gray-600 mt-2">You can select multiple images.</p>
+
+            <div class="mt-4 flex flex-wrap gap-4">
+              <div>
+                <label
+                  v-if="previewImages.length > 0"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >Selected Photos</label
+                >
+                <!-- Display photos -->
+                <div class="flex gap-2">
+                  <img
+                    v-for="(photo, index) in previewImages"
+                    :key="index"
+                    :src="photo"
+                    alt="Preview"
+                    class="w-24 h-24 object-cover border border-gray-300 rounded"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -142,19 +162,26 @@ export default {
         availability: "available",
         photos: [],
       },
+      previewImages: [],
       error: null,
       success: null,
     };
   },
   methods: {
     handleFileUpload(event) {
+      const files = event.target.files;
       this.form.photos = Array.from(event.target.files);
+
+      // Update previewImages array
+      this.previewImages = Array.from(files).map((file) =>
+        URL.createObjectURL(file)
+      );
     },
     async addCar() {
       try {
         const formData = new FormData();
         for (const key in this.form) {
-          if (this.form.hasOwnProperty(key)) {
+          if (Object.prototype.hasOwnProperty.call(this.form, key)) {
             if (key === "photos") {
               this.form.photos.forEach((photo) => {
                 formData.append("photos[]", photo);
@@ -188,6 +215,7 @@ export default {
           availability: "available",
           photos: [],
         };
+        this.previewImages = [];
       } catch (error) {
         this.error = error.response.data.message || "Failed to add car.";
         this.success = null;
@@ -197,6 +225,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* Optional additional styling */
-</style>
+<style scoped></style>

@@ -93,6 +93,7 @@ export default {
         this.success = "Login successful!";
         this.error = null;
         localStorage.setItem("token", response.data.token);
+        console.log(localStorage);
         this.$store.dispatch("login");
         this.$router.push("/home");
       } catch (error) {
@@ -104,6 +105,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* Optional additional styling */
-</style>
+<style scoped></style>

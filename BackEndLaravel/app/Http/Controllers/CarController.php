@@ -20,28 +20,23 @@ class CarController extends Controller
         $userId = Auth::id();
         $query = Car::where('user_id', $userId)->orderByDesc('updated_at');
 
-        // Filter by brand
         if ($request->has('brand') && !empty($request->brand)) {
             $query->where('brand', 'LIKE', '%' . $request->brand . '%');
         }
 
-        // Filter by model
         if ($request->has('model') && !empty($request->model)) {
             $query->where('model', 'LIKE', '%' . $request->model . '%');
         }
 
-        // Filter by availability
         if ($request->has('availability') && !empty($request->availability)) {
             $query->where('availability', $request->availability);
         }
 
-        // Pagination
-        $cars = $query->paginate(8); // Adjust the number per page as needed
+        $cars = $query->paginate(8);
 
         foreach ($cars as $car) {
-            $car->photos = json_decode($car->photos); // Convert JSON string to array
+            $car->photos = json_decode($car->photos);
         }
-
 
         return response()->json($cars);
     }
@@ -64,7 +59,6 @@ class CarController extends Controller
         $car->daily_rent = $request->dailyRent;
         $car->availability = $request->availability;
         $car->user_id = Auth::id();
-
         if ($request->hasFile('photos')) {
             $photos = [];
             foreach ($request->file('photos') as $photo) {
@@ -73,16 +67,14 @@ class CarController extends Controller
             }
             $car->photos = json_encode($photos);
         }
-
         $car->save();
+
         return response()->json($car, 201);
     }
 
     public function show($id)
     {
         $car = Car::findOrFail($id);
-
-        // Decode JSON if 'photos' is stored as JSON in the database
         $car->photos = json_decode($car->photos, true);
 
         return response()->json($car);
@@ -106,7 +98,6 @@ class CarController extends Controller
         $car->license_plate = $request->licensePlate;
         $car->daily_rent = $request->dailyRent;
         $car->availability = $request->availability;
-
         if ($request->hasFile('photos')) {
             $oldPhotos = json_decode($car->photos);
             if (is_array($oldPhotos)) {
@@ -114,7 +105,6 @@ class CarController extends Controller
                     Storage::disk('public')->delete($oldPhoto);
                 }
             }
-
             $photos = [];
             foreach ($request->file('photos') as $photo) {
                 $path = $photo->store('cars', 'public');
@@ -122,24 +112,22 @@ class CarController extends Controller
             }
             $car->photos = json_encode($photos);
         }
-
         $car->save();
+
         return response()->json($car);
     }
 
     public function destroy($id)
     {
         $car = Car::findOrFail($id);
-
-        // Hapus foto-foto yang terkait dari storage
         if ($car->photos) {
             $photos = json_decode($car->photos);
             foreach ($photos as $photo) {
                 Storage::disk('public')->delete($photo);
             }
         }
-
         $car->delete();
+
         return response()->json(null, 204);
     }
 }

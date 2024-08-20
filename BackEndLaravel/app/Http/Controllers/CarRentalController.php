@@ -37,17 +37,17 @@ class CarRentalController extends Controller
         // Hitung jumlah hari dan total biaya
         $startDate = new \DateTime($request->start_date);
         $endDate = new \DateTime($request->end_date);
-        $numberOfDays = $endDate->diff($startDate)->days + 1; // Termasuk tanggal akhir
+        $numberOfDays = $endDate->diff($startDate)->days + 1;
         $totalCost = $car->daily_rent * $numberOfDays;
 
-        // Buat rekaman penyewaan
+        // Buat baris baru di tabel 'rentals'
         $rental = Rental::create([
             'car_id' => $car->id,
             'user_id' => Auth::id(),
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
-            'total_cost' => $totalCost,       // Tambahkan total biaya
-            'number_of_days' => $numberOfDays // Tambahkan jumlah hari
+            'total_cost' => $totalCost,
+            'number_of_days' => $numberOfDays
         ]);
 
         return response()->json($rental, 201);
@@ -59,13 +59,11 @@ class CarRentalController extends Controller
         // Tentukan jumlah item per halaman
         $perPage = 4;
 
-        // Gunakan paginate untuk mengambil data secara paginated
         $rentals = Rental::with('car')
             ->where('user_id', Auth::id())
-            ->orderBy('end_date', 'asc')
+            ->orderBy('end_date', 'desc')
             ->paginate($perPage);
 
-        // Ubah photos menjadi array jika itu adalah string JSON
         foreach ($rentals as $rental) {
             if ($rental->car) {
                 if (is_string($rental->car->photos)) {
@@ -74,17 +72,14 @@ class CarRentalController extends Controller
             }
         }
 
-        // Return data paginated
         return response()->json($rentals);
     }
 
 
-    public function availableDates($id)
+    public function unAvailableDates($id)
     {
-        // Get the car by ID
         $car = Car::findOrFail($id);
 
-        // Retrieve all rentals for this car
         $rentals = Rental::where('car_id', $car->id)
             ->get(['start_date', 'end_date']);
 
@@ -94,7 +89,7 @@ class CarRentalController extends Controller
     public function completeRental($id)
     {
         $rental = Rental::findOrFail($id);
-        $rental->status = 'completed'; // Update status to 'completed'
+        $rental->status = 'completed';
         $rental->save();
 
         return response()->json(['message' => 'Rental completed successfully.']);

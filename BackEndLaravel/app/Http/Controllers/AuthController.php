@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -48,7 +49,7 @@ class AuthController extends Controller
             // Jika kredensial valid, dapatkan pengguna
             $user = Auth::user();
 
-            // Generate token JWT atau gunakan Laravel Passport/Token jika ada
+            // Generate token ('Personal Access Token' bisa diisi apa saja)
             $token = $user->createToken('Personal Access Token')->plainTextToken;
 
             // Respons dengan token

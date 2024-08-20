@@ -283,12 +283,11 @@ export default {
 
       this.car = response.data;
 
-      // Ensure this.car.photos is an array
       if (Array.isArray(this.car.photos)) {
-        this.photos = this.car.photos; // Existing photos
-        this.previewPhotos = []; // Reset preview photos
+        this.photos = this.car.photos;
+        this.previewPhotos = [];
       } else {
-        this.photos = []; // Default to an empty array if photos is not an array
+        this.photos = [];
       }
     } catch (error) {
       console.error("Failed to fetch car data", error);
@@ -297,6 +296,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* Add any custom styles here if needed */
-</style>
+<style scoped></style>

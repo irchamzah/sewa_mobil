@@ -11,7 +11,7 @@ import CarDetailsView from "../views/cars/CarDetailsView.vue";
 import RentCarView from "../views/cars/RentCarView.vue";
 
 const routes = [
-  { path: "/", name: "Home", component: HomeView }, // Perbaiki nama route di sini
+  { path: "/", name: "Home", component: HomeView },
   { path: "/home", component: HomeView },
   { path: "/register", name: "Register", component: RegisterView },
   { path: "/login", name: "Login", component: LoginView },

@@ -5,7 +5,6 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\CarRentalController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,7 +33,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('/rent-car', [CarRentalController::class, 'rentCar']);
     Route::get('/rental-history', [CarRentalController::class, 'rentalHistory']);
-    Route::get('/rental/{id}/available-dates', [CarRentalController::class, 'availableDates']);
+    Route::get('/rental/{id}/unavailable-dates', [CarRentalController::class, 'unAvailableDates']);
     Route::post('/rental/{id}/complete', [CarRentalController::class, 'completeRental']);
 
     Route::get('/profile', [UserController::class, 'showProfile']);

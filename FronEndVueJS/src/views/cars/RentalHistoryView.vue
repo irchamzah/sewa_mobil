@@ -88,7 +88,7 @@
                 <button
                   v-if="rental.status === 'active'"
                   @click="completeRental(rental.id)"
-                  class="font-medium text-yellow-600 dark:text-yellow-500 hover:underline"
+                  class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                 >
                   Complete Rental
                 </button>
@@ -191,7 +191,7 @@ export default {
     const rentals = ref([]);
     const isLoading = ref(true);
     const page = ref(1);
-    const totalPages = ref(1); // Initialize with 1, update with actual total pages from API
+    const totalPages = ref(1);
 
     const fetchRentals = async (pageNum) => {
       isLoading.value = true;
@@ -205,7 +205,7 @@ export default {
             },
           }
         );
-        rentals.value = response.data.data; // Assuming API returns paginated data in 'data' key
+        rentals.value = response.data.data;
         page.value = response.data.current_page;
         totalPages.value = response.data.last_page;
       } catch (error) {
@@ -221,6 +221,7 @@ export default {
     const completeRental = async (rentalId) => {
       try {
         const token = localStorage.getItem("token");
+
         await axios.post(
           `http://localhost:8000/api/rental/${rentalId}/complete`,
           {},
@@ -264,6 +265,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* Add your custom styles here */
-</style>
+<style scoped></style>
