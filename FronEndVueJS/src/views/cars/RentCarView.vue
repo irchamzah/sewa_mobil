@@ -113,9 +113,19 @@ export default {
     });
 
     const isDateAvailable = computed(() => {
+      const today = new Date();
+      const yesterday = new Date();
+      yesterday.setDate(today.getDate() - 1);
+
       const start = new Date(startDate.value);
       const end = new Date(endDate.value);
 
+      // jika start itu kemarin maka disable confirm rental
+      if (start <= yesterday) {
+        return false;
+      }
+
+      // jika end itu <= dari start maka disable confirm rental
       if (end <= start) {
         return false;
       }

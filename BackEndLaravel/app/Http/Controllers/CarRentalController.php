@@ -61,7 +61,7 @@ class CarRentalController extends Controller
 
         $rentals = Rental::with('car')
             ->where('user_id', Auth::id())
-            ->orderBy('end_date', 'desc')
+            ->orderBy('updated_at', 'desc')
             ->paginate($perPage);
 
         foreach ($rentals as $rental) {

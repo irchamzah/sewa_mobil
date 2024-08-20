@@ -124,22 +124,22 @@
               >
                 {{ car.availability }}
               </p>
-              <p class="text-sm font-medium text-gray-500 dark:text-gray-400">
+              <!-- <p class="text-sm font-medium text-gray-500 dark:text-gray-400">
                 ID: {{ car.id }}
-              </p>
+              </p> -->
             </div>
+            <p
+              class="text-2xl font-bold leading-tight text-gray-900 dark:text-white"
+            >
+              {{
+                Intl.NumberFormat("id-ID", {
+                  style: "currency",
+                  currency: "IDR",
+                  minimumFractionDigits: 0,
+                }).format(car.daily_rent)
+              }}
+            </p>
             <div class="mt-4 flex flex-col justify-between gap-4">
-              <p
-                class="text-2xl font-bold leading-tight text-gray-900 dark:text-white"
-              >
-                {{
-                  Intl.NumberFormat("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                    minimumFractionDigits: 0,
-                  }).format(car.daily_rent)
-                }}
-              </p>
               <a
                 @click="viewDetails(car.id)"
                 class="cursor-pointer inline-flex items-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-min text-nowrap"

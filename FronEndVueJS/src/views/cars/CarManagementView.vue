@@ -135,6 +135,17 @@
                 {{ car.availability }}
               </p>
             </div>
+            <p
+              class="text-2xl font-bold leading-tight text-gray-900 dark:text-white"
+            >
+              {{
+                Intl.NumberFormat("id-ID", {
+                  style: "currency",
+                  currency: "IDR",
+                  minimumFractionDigits: 0,
+                }).format(car.daily_rent)
+              }}
+            </p>
             <div class="mt-4 flex justify-between">
               <button
                 @click="editCar(car.id)"
